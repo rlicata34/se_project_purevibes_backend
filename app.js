@@ -9,10 +9,15 @@ const { PORT = 3001 } = process.env;
 app.use(cors());
 app.use(express.json());
 
+console.log("API Key:", process.env.TICKETMASTER_API_KEY);
+console.log("Running in environment:", process.env.NODE_ENV);
+
 app.get("/api/events", (req, res) => {
   const { genre, artist, city, startDate, endDate } = req.query;
 
   const ticketmasterURL = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${process.env.TICKETMASTER_API_KEY}&classificationName=${genre}&keyword=${artist}&city=${city}&startDateTime=${startDate}&endDateTime=${endDate}`;
+
+  console.log("Constructed Ticketmaster URL:", ticketmasterURL);
 
   axios
     .get(ticketmasterURL)
