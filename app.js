@@ -11,9 +11,14 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/api/events", (req, res) => {
-  console.log("Received Query Params:", req.query); // Log frontend request params
+  let { genre, artist, city, startDate, endDate } = req.query;
 
-  const { genre, artist, city, startDate, endDate } = req.query;
+  // Prevent undefined values
+  genre = genre || "";
+  artist = artist || "";
+  city = city || "";
+  startDate = startDate || "";
+  endDate = endDate || "";
 
   const ticketmasterURL = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${process.env.TICKETMASTER_API_KEY}&classificationName=${genre}&keyword=${artist}&city=${city}&startDateTime=${startDate}&endDateTime=${endDate}`;
   console.log("Requesting Ticketmaster API:", ticketmasterURL);
