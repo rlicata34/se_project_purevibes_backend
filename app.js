@@ -11,17 +11,16 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/api/events", (req, res) => {
-  let { genre, artist, city, startDate, endDate } = req.query;
+  let { genre, artist, stateCode, startDate, endDate } = req.query;
 
   // Prevent undefined values
   genre = genre || "";
   artist = artist || "";
-  city = city || "";
+  stateCode = stateCode || "";
   startDate = startDate || "";
   endDate = endDate || "";
 
-  const ticketmasterURL = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${process.env.TICKETMASTER_API_KEY}&classificationName=${genre}&keyword=${artist}&city=${city}&startDateTime=${startDate}&endDateTime=${endDate}`;
-  console.log("Requesting Ticketmaster API:", ticketmasterURL);
+  const ticketmasterURL = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${process.env.TICKETMASTER_API_KEY}&classificationName=${genre}&keyword=${artist}&stateCode=${stateCode}&startDateTime=${startDate}&endDateTime=${endDate}`;
 
   axios
     .get(ticketmasterURL)
