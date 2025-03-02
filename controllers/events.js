@@ -10,18 +10,18 @@ const getEvents = (req, res, next) => {
     .catch(next);
 };
 
-const getSingleBookmarkedEvent = (req, res, next) => {
-  const { eventId } = req.params;
-  const userId = req.user._id;
+// const getSingleBookmarkedEvent = (req, res, next) => {
+//   const { eventId } = req.params;
+//   const userId = req.user._id;
 
-  Event.findOne({ eventId, owner: userId })
-    .orFail(() => new NotFoundError("Bookmarked event not found"))
-    .then((event) => res.send(event))
-    .catch(next);
-};
+//   Event.findOne({ eventId, owner: userId })
+//     .orFail(() => new NotFoundError("Bookmarked event not found"))
+//     .then((event) => res.send(event))
+//     .catch(next);
+// };
 
 const createEvent = (req, res, next) => {
-  const { name, date, venue, image, url, eventId } = req.body;
+  const { name, startDateTime, venue, image, url, eventId } = req.body;
   const userId = req?.user?._id;
 
   Event.findOne({ owner: userId, eventId })
@@ -31,7 +31,7 @@ const createEvent = (req, res, next) => {
       }
       return Event.create({
         name,
-        date,
+        startDateTime,
         venue,
         image,
         url,

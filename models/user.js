@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema({
   bookmarkedEvents: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "BookmarkedEvent",
+      ref: "event",
     },
   ],
 });
