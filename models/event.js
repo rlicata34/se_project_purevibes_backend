@@ -25,11 +25,6 @@ const eventSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  owner: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
-    required: true,
-  },
   bookmarks: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -40,6 +35,7 @@ const eventSchema = new mongoose.Schema({
   eventId: {
     type: String,
     required: true,
+    unique: true,
   },
 });
 
