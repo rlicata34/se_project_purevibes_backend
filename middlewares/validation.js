@@ -61,6 +61,6 @@ module.exports.validateUpdateUserBody = celebrate({
 
 module.exports.validateId = celebrate({
   params: Joi.object().keys({
-    itemId: Joi.string().length(24).hex().required(),
+    eventId: Joi.string().length(24).hex().required(),
   }),
 });
