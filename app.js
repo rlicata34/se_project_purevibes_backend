@@ -4,6 +4,8 @@ console.log("Loaded API Key:", process.env.TICKETMASTER_API_KEY);
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const { errors } = require("celebrate");
+const { requestLogger, errorLogger } = require("./middlewares/logger");
 const axios = require("axios");
 
 const mainRouter = require("./routes/index");
@@ -21,6 +23,8 @@ mongoose
 
 app.use(cors());
 app.use(express.json());
+
+app.use(requestLogger);
 
 app.get("/api/events", (req, res) => {
   let { genre, artist, stateCode, startDate, endDate } = req.query;
@@ -45,7 +49,16 @@ app.get("/api/events", (req, res) => {
     });
 });
 
+app.get("/crash-test", () => {
+  setTimeout(() => {
+    throw new Error("Server will crash now");
+  }, 0);
+});
+
 app.use("/", mainRouter);
+app.use(errorLogger);
+
+app.use(errors());
 app.use(errorHandler);
 
 app.listen(PORT, () => {
