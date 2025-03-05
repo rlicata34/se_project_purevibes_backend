@@ -61,6 +61,10 @@ module.exports.validateUpdateUserBody = celebrate({
 
 module.exports.validateId = celebrate({
   params: Joi.object().keys({
-    eventId: Joi.string().length(24).hex().required(),
+    eventId: Joi.string().required().messages({
+      "string.base": "Event ID must be a string",
+      "string.empty": "Event ID cannot be empty",
+      "any.required": "Event ID is required",
+    }),
   }),
 });
